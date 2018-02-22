@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>No JS, No Ajax</title>
+    <meta name="description" content="No JS, No Ajax">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <noscript>
+        For full functionality of this site it is necessary to enable JavaScript.
+    </noscript>
+    <script src="main.js"></script>
+    <script type="text/javascript">
+        // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/cookies/onChanged
+        (function() {
+            var app = Elm.Main.fullscreen();
+            var onCookieSet = function(page) {
+                app.ports.fromJsToApp.send(document.cookie);
+            };
+            app.ports.fromJsToApp.send(document.cookie);
+            app.ports.fromAppToJs.subscribe(onCookieSet);
+        })();
+    </script>
+</body>
+
+</html>
